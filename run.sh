@@ -16,6 +16,8 @@ blue="\033[1;34m"                                           ##
 darkgrey="\e[100m"                                          ##
 nc="\e[0m"                                                  ##
 ##############################################################
+## Copyright by Mindbl0w - paypal.me/abdiprawiran
+##############################################################
 date=$(date +"%H:%M:%S")
 fromlive=$(cat conf.php | grep '$mail->addAddress' | awk -F "'" '{printf $2}')
 fromwarn=$(cat conf.php | grep '$mail->setFrom' | awk -F "'" '{printf $2}')
