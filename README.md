@@ -1,4 +1,4 @@
-# EZMTP
+# Evmoure - MASS SMTP CHECKER
 Bulk SMTP Checker, Easy use, No Encrypted File and Clean Code
 
 ## Dependencies
