@@ -16,8 +16,6 @@ blue="\033[1;34m"                                           ##
 darkgrey="\e[100m"                                          ##
 nc="\e[0m"                                                  ##
 ##############################################################
-## Copyright by Mindbl0w - paypal.me/abdiprawiran
-##############################################################
 date=$(date +"%H:%M:%S")
 fromlive=$(cat conf.php | grep '$mail->addAddress' | awk -F "'" '{printf $2}')
 fromwarn=$(cat conf.php | grep '$mail->setFrom' | awk -F "'" '{printf $2}')
@@ -35,6 +33,8 @@ printf "${green}[+]${white} Input SMTPS List : "
 read list
 printf "${green}[+]${white} Set Threads : "
 read threads
+printf "${green}[+]${white} Set Delay : "
+read delay
 echo ""
 }
 main() {
@@ -51,11 +51,15 @@ main
 function testSend() {
   i="${1}"
   users=$(echo $i | awk -F '|' '{print $3}')
-  babi=$(timeout 15 php conf.php "$i")
+  babi=$(timeout $delay php conf.php "$i")
   if [[ $babi =~ "250 Great success" ]]; then
+  printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
+  elif [[ $babi =~ "250 2.0.0 OK" ]]; then
   printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
   elif [[ $babi =~ "554 The domain is unverified" ]]; then
   printf "[${white}${green}$date${nc}${white}]-[${yellow}WARN${white}]-[${green}$users${white}] FROM MAIL ${yellow}$fromwarn${white} NOT ACCEPTED, CHANGE THAT.${white}\n"
+  elif [[ $babi =~ "Could not connect to SMTP host." ]]; then
+  printf "[${white}${green}$date${nc}${white}]-[${red}SHIT${white}]-[${green}$users${white}] SMTP HOST COULD NOT FOUND, ERROR${red} $fromlive${white}\n"
   else
   printf "[${white}${green}$date${nc}${white}]-[${red}SHIT${white}]-[${green}$users${white}] FAILED SENT TO${red} $fromlive${white}\n"
   fi
