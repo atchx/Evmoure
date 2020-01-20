@@ -39,7 +39,7 @@ echo ""
 }
 main() {
   if [[ $(ls | grep "conf.php") =~ "" ]]; then
-  prinft "${red} CAN'T FIND CONF.PHP\n EXITING..."
+  printf "${red} CAN'T FIND CONF.PHP\n EXITING..."
   sleep 2
   exit
   fi
