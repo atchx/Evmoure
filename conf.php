@@ -1,5 +1,5 @@
 <?php
-// Modified by L0C4LH34RTZ - INDOXPLOIT.OR.ID
+// Modified by L0C4LH34RTZ
 // DONT CHANGE COPYRIGHT OR I'LL ENCRYPT THIS
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -19,20 +19,21 @@ $mail->IsSMTP();
 $mail->CharSet = 'UTF-8';
 
 $mail->Host       = $one; // SMTP server example
-$mail->SMTPDebug  = 3;                     // enables SMTP debug information (for testing)
+$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
 $mail->SMTPAuth   = true;                  // enable SMTP authentication
 $mail->Port       = (int) $two;                    // set the SMTP port for the GMAIL server
 $mail->Username   = $three; // SMTP account username example
 $mail->Password   = $four;        // SMTP account password example
+$mail->SMTPAutoTLS = true;  // Enable TLS protocol automatically if needed 
 
-$mail->setFrom('noreply@kipkipfun.com'); // Set From Mail
-$mail->addAddress('abdiprawiran@yahoo.com'); // Put your email here
+$mail->setFrom("$three", "$three"); // Set From Mail
+$mail->addAddress('mail@example.com'); // PUT YOUR EMAIL HERE
 
 // Content
 $mail->isHTML(true);                                  // Set email format to HTML
-$mail->Subject = '=== ZeroByte.ID ===';
-$mail->Body    = '<h2>ZeroByte.ID SMTP Checker</h2><br/>==============================<br/>Going to Inbox ? Or this is shit SMTP ?<br/>';
-$mail->AltBody = '';
+$mail->Subject = "Evmoure Checker - $three";
+$mail->Body    = '<style>.mek{ font-family: "Farsan", cursive; size: 5; }</style><link href="https://fonts.googleapis.com/css?family=Farsan&display=swap" rel="stylesheet"><font class="mek">However about you, Wherever you are<br>I still loving you,<br>So much.</font><br><br><center><font size="1" color="grey">Powered By Graylife.Co</font></center>';
+$mail->AltBody = $three;
 
 $mail->send();
 ?>
