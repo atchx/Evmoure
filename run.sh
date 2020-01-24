@@ -53,14 +53,19 @@ function testSend() {
   users=$(echo $i | awk -F '|' '{print $3}')
   babi=$(timeout $delay php conf.php "$i")
   if [[ $babi =~ "250 Great success" ]]; then
+  ((y++))
   printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
   elif [[ $babi =~ "250 2.0.0 OK" ]]; then
+  ((y++))
   printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
   elif [[ $babi =~ "554 The domain is unverified" ]]; then
+  ((z++))
   printf "[${white}${green}$date${nc}${white}]-[${yellow}WARN${white}]-[${green}$users${white}] FROM MAIL ${yellow}$fromwarn${white} NOT ACCEPTED, CHANGE THAT.${white}\n"
   elif [[ $babi =~ "Could not connect to SMTP host." ]]; then
+  ((z++))
   printf "[${white}${green}$date${nc}${white}]-[${red}SHIT${white}]-[${green}$users${white}] SMTP HOST COULD NOT FOUND, ERROR${red} $fromlive${white}\n"
   else
+  ((z++))
   printf "[${white}${green}$date${nc}${white}]-[${red}SHIT${white}]-[${green}$users${white}] FAILED SENT TO${red} $fromlive${white}\n"
   fi
 }
