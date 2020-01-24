@@ -38,7 +38,7 @@ read delay
 echo ""
 }
 main() {
-  if [[ $(ls | grep "conf.php") =~ "" ]]; then
+  if [[ $(ls | grep "conf.php") == "" ]]; then
   printf "${red} CAN'T FIND CONF.PHP\n EXITING..."
   sleep 2
   exit
