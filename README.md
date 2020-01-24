@@ -3,7 +3,8 @@ Bulk SMTP Checker, Easy use, No Encrypted File and Clean Code
 
 ## Dependencies
  - PHP 7
- 
+## List Example
+``` HOST|PORT|USERNAME|PASSWORD```
 ## Change This
 ```
 $mail->addAddress('email-to@example.com'); // Put your email here
