@@ -85,20 +85,19 @@ function testSend() {
   echo "0" >> shitcount                                                                                                                                                                                 
   printf "[${white}${green}$date${nc}${white}]-[${red}SHIT${white}]-[${green}$users${white}] FAILED SENT TO${red} $fromlive${white}\n"                                                                  
   fi                                                                                                                                                                                                    
-554 Message rejected: Sending paused for this account.                                                                                                                                                  
 }                                                                                                                                                                                                       
 for i in $(cat $list); do                                                                                                                                                                               
   ((cthread=cthread%threads)); ((cthread++==0)) && wait                                                                                                                                                 
   testSend "${i}" &                                                                                                                                                                                     
-done                                                                                                                                                                                                    
+done
 wait                                                                                                                                                                                                    
 printf "${green}----------------------- ${white}[FINISH]${green} -----------------------${white}\n"                                                                                                     
 printf "                                                                                                                                                                                                
-+--------------------+                                                                                                                                                                                  
++--------------------+ 
 | ${green}LIVE${white} |${red} SHIT${white} | ${yellow}WARN${white} |                                                                                                                                   
-+------+------+------+                                                                                                                                                                                  
-| $(cat livecount | wc -l)    | $(cat shitcount | wc -l)    | $(cat warncount | wc -l)    |                                                                                                             
-+------+------+------+\n\n"                                                                                                                                                                             
++------+------+------+ 
+| $(cat livecount | wc -l)   | $(cat shitcount | wc -l)    | $(cat warncount | wc -l)    |
++------+------+------+\n\n" 
 if [[ -f shitcount ]]; then                                                                                                                                                                             
   rm shitcount                                                                                                                                                                                          
 fi                                                                                                                                                                                                      
