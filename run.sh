@@ -68,6 +68,15 @@ function testSend() {
     elif [[ $babi =~ "250 2.0.0 OK" ]]; then
         echo "0" >> livecount
         printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
+    elif [[ $babi =~ "250 2.0.0" ]]; then
+        echo "0" >> livecount
+        printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
+    elif [[ $babi =~ "mail accepted for delivery" ]]; then
+        echo "0" >> livecount
+        printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
+    elif [[ $babi =~ "Message accepted for delivery" ]]; then
+        echo "0" >> livecount
+        printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
     elif [[ $babi =~ "554 The domain is unverified" ]]; then
         echo "0" >> warncount
         printf "[${white}${green}$date${nc}${white}]-[${yellow}WARN${white}]-[${green}$users${white}] FROM MAIL ${yellow}$fromwarn${white} NOT ACCEPTED, CHANGE THAT.${white}\n"
@@ -80,6 +89,12 @@ function testSend() {
     elif [[ $babi =~ "554 Message rejected: Sending paused for this account." ]]; then
         echo "0" >> warncount
         printf "[${white}${green}$date${nc}${white}]-[${yellow}SHIT${white}]-[${green}$users${white}] AWS SMTP REJECTED EMAIL SENDING${yellow} $fromlive${white}\n"
+   elif [[ $babi =~ "SERVER -> CLIENT: 250 OK id=" ]]; then
+        echo "0" >> livecount
+        printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
+   elif [[ $babi =~ "250 2.0.0 Ok: queued as" ]]; then
+        echo "0" >> livecount
+        printf "[${white}${green}$date${nc}${white}]-[${green}LIVE${white}]-[${green}$users${white}] SUCCESS SENT TO${green} $fromlive${white}\n"
     else
         echo "0" >> shitcount
         printf "[${white}${green}$date${nc}${white}]-[${red}SHIT${white}]-[${green}$users${white}] FAILED SENT TO${red} $fromlive${white}\n"
@@ -91,16 +106,22 @@ for i in $(cat $list); do
 done
 wait
 printf "${green}----------------------- ${white}[FINISH]${green} -----------------------${white}\n"
+countlive=$(grep -c "0" livecount)
+countshit=$(grep -c "0" shitcount)
+countwarn=$(grep -c "0" warncount)
 printf "
 +--------------------+
 | ${green}LIVE${white} |${red} SHIT${white} | ${yellow}WARN${white} |
 +------+------+------+
-| $(cat livecount | wc -l)   | $(cat shitcount | wc -l)    | $(cat warncount | wc -l)    |
+| $countlive    | $countshit    | $countwarn    |
 +------+------+------+\n\n"
 if [[ -f shitcount ]]; then
     rm shitcount
 fi
 if [[ -f livecount ]]; then
     rm livecount
+fi
+if [[ -f warncount ]]; then
+    rm warncount
 fi
 exit
