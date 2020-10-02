@@ -113,9 +113,11 @@ countshit=$(grep -c "0" shitcount)
 countwarn=$(grep -c "0" warncount)
 printf "
 +--------------------+
-| ${green}LIVE${white} |${red} SHIT${white} | ${yellow}WARN${white} |
+| ${green}LIVE${white} $countlive
 +------+------+------+
-| $countlive    | $countshit    | $countwarn    |
+| ${red} SHIT${white} $countshit
++------+------+------+
+| ${yellow}WARN${white} $countwarn
 +------+------+------+\n\n"
 if [[ -f shitcount ]]; then
     rm shitcount
