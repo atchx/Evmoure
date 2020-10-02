@@ -85,7 +85,9 @@ function testSend() {
         printf "[${white}${green}$date${nc}${white}]-[${red}SHIT${white}]-[${green}$users${white}] SMTP HOST COULD NOT FOUND, ERROR${red} $fromlive${white}\n"
     elif [[ $babi =~ "SMTP connect() failed." ]]; then
         echo "0" >> shitcount
-        printf "[${white}${green}$date${nc}${white}]-[${red}SHIT${white}]-[${green}$users${white}] CAN'T CONNECT TO HOST, ERROR${red} $fromlive${white}\n"
+    elif [[ $babi =~ "Sending paused for this account." ]]; then
+        echo "0" >> shitcount
+        printf "[${white}${green}$date${nc}${white}]-[${red}SHIT${white}]-[${green}$users${white}]${red} AWS SES SUSPENDED ACCOUNT${red}${white}\n"
     elif [[ $babi =~ "554 Message rejected: Sending paused for this account." ]]; then
         echo "0" >> warncount
         printf "[${white}${green}$date${nc}${white}]-[${yellow}SHIT${white}]-[${green}$users${white}] AWS SMTP REJECTED EMAIL SENDING${yellow} $fromlive${white}\n"
